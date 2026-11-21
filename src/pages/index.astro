@@ -1,0 +1,204 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { links, nav, heroChips, trust, meridianPoints, flow, steps, risks, wallets, views, faq, physChips } from '../data/site.js';
+const pad = (n) => String(n).padStart(2, '0');
+// posisi 6 node loop di lingkaran (viewBox 400)
+const nodes = steps.map((s, i) => { const a = -Math.PI / 2 + (i / steps.length) * Math.PI * 2; return { x: 200 + Math.cos(a) * 150, y: 200 + Math.sin(a) * 150, lx: 200 + Math.cos(a) * 182, ly: 204 + Math.sin(a) * 182 }; });
+---
+<Layout>
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-40 flex items-center justify-between px-6 py-5 md:px-[4.5rem]">
+    <a href="#top" data-scroll="top" class="text-2xl font-bold tracking-[.18em]" aria-label="ARIA — back to top">ARIA</a>
+    <nav class="mono hidden gap-9 text-[.82rem] tracking-[.1em] md:flex" aria-label="Main">
+      {nav.map(([l, id]) => <a href={`#${id}`} data-scroll={id} data-nav={id} class="text-white/60 transition hover:text-white [&.active]:text-white">{l}</a>)}
+    </nav>
+    <div class="flex items-center gap-3">
+      <button id="sound-btn" type="button" class="sound-btn" data-state="pending" aria-pressed="true" aria-label="Matikan musik">
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </button>
+      <div class="hidden gap-3 md:flex">
+        {/* Tombol Telegram dinonaktifkan. Untuk mengaktifkan lagi: hapus tanda komentar di bawah ini.
+        <a href={links.telegram} class="pill !py-2">Join Telegram</a>
+        */}
+        <a href={links.dashboard} class="pill pill-solid !py-2">Launch Dashboard</a>
+      </div>
+      <button id="menu-btn" class="pill !py-2 md:hidden" aria-expanded="false">Menu</button>
+    </div>
+  </header>
+  <div id="menu" class="fixed inset-0 z-30 hidden flex-col justify-center gap-6 bg-[#04050f]/92 p-8 backdrop-blur-xl md:hidden">
+    {nav.map(([l, id]) => <a href={`#${id}`} data-scroll={id} class="text-4xl font-light">{l}</a>)}
+    <a href={links.dashboard} class="pill pill-solid mt-6 w-fit">Launch Dashboard</a>
+    {/* <a href={links.telegram} class="pill w-fit">Join Telegram</a> */}
+  </div>
+
+  <main id="top">
+    <!-- HERO: A kaca cair + teks ARIA dirender WebGL (scene.js) -->
+    <section id="hero" class="relative h-[260svh]">   <!-- 260svh = (1 + PIN 1.6) x 100svh, lihat scene.js -->
+      <div id="hero-ui" class="sticky top-0 h-[100svh] min-h-[640px]">
+        <i class="plus" style="left:26%;top:18%"></i><i class="plus" style="left:70%;top:26%"></i><i class="plus" style="left:10%;top:60%"></i><i class="plus" style="left:88%;top:62%"></i>
+        <p data-in class="eyebrow absolute left-6 top-28 md:left-[4.5rem] md:top-[16%]">// Autonomous Reasoning Intelligent Agent</p>
+        <div class="absolute inset-x-6 bottom-8 md:inset-x-[4.5rem]">
+          <div class="grid items-end gap-6 md:grid-cols-[1.25fr_1fr] md:gap-16">
+            <div>
+              <h1 data-in class="text-[clamp(2.4rem,5.4vw,5rem)] font-light leading-[1.02] tracking-[-.02em]">The agent that <span class="grad-text font-medium">shows its work.</span></h1>
+              <div data-in class="mt-7 flex flex-wrap gap-3">
+                <a href={links.dashboard} class="pill pill-solid">Launch Dashboard ↗</a>
+                <a href="#how-it-works" data-scroll="how-it-works" class="pill">See how it works</a>
+              </div>
+            </div>
+            <div data-in>
+              <p class="max-w-md text-base leading-relaxed text-white/80 md:text-lg">ARIA runs autonomous liquidity strategies on Solana DLMM. It screens pools, validates every entry, manages risk by hard rules, and logs every decision where you can see it.</p>
+              <p class="mono mt-4 text-xs tracking-wide text-white/45">Non-custodial design. Trading involves risk, including loss of capital.</p>
+            </div>
+          </div>
+          <div data-in class="mt-8 hidden flex-wrap gap-2 md:flex">{heroChips.map((c) => <span class="chip">{c}</span>)}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST STRIP -->
+    <section class="border-y border-white/10 bg-[#04050f]/55 px-6 py-10 backdrop-blur-md md:px-[4.5rem]">
+      <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+        {trust.map((t) => <div data-reveal><p class="text-5xl font-extralight md:text-6xl"><span data-count={t.n}>0</span><span class="grad-text">{t.s}</span></p><p class="mono mt-2 text-xs uppercase tracking-[.16em] text-white/55">{t.l}</p></div>)}
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="sec">
+      <p class="eyebrow" data-reveal>01 — Features</p>
+      <h2 class="h2 mt-6 max-w-4xl" data-reveal>Autonomous where it helps. <span class="grad-text">Accountable everywhere.</span></h2>
+      <div class="mt-16 grid gap-6 lg:grid-cols-2">
+        <article class="glass spot p-8 md:p-12" data-reveal data-spot>
+          <p class="mono text-xs tracking-[.2em] text-[#44e1ff]">THE ENGINE</p>
+          <h3 class="mt-5 text-4xl font-light md:text-5xl">Meet Meridian.</h3>
+          <p class="mt-5 max-w-lg text-lg leading-relaxed text-white/75">The engine behind ARIA. It screens, opens, manages, and closes Meteora DLMM positions on its own, within the strategy and limits you set.</p>
+          <ul class="mt-9 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2">
+            {meridianPoints.map((p, i) => <li class="bg-[#070a22]/80 p-5 text-[.95rem] text-white/85"><span class="mono mb-3 block text-xs text-[#ff7ad9]">{pad(i + 1)}</span>{p}</li>)}
+          </ul>
+        </article>
+        <article class="glass spot p-8 md:p-12" data-reveal data-spot>
+          <p class="mono text-xs tracking-[.2em] text-[#ff7ad9]">THE ADVISOR</p>
+          <h3 class="mt-5 text-4xl font-light md:text-5xl">AI that advises. <br />Rules that decide.</h3>
+          <p class="mt-5 max-w-lg text-lg leading-relaxed text-white/75">HiveMind reviews each candidate and adds context before capital moves. It never has the last word: every deployment must still pass the Risk Engine.</p>
+          <div class="mt-12 grid grid-cols-4 gap-2">
+            {flow.map((f, i) => <div class="relative text-center"><div class="flow-line"><i style={`animation-delay:${i * 0.5}s`}></i></div><div class={`relative mx-auto grid h-14 w-14 place-items-center rounded-full border bg-[#070a22] mono text-sm ${i === 2 ? 'border-[#44e1ff] text-[#44e1ff]' : 'border-white/30'}`}>{pad(i + 1)}</div><p class="mono mt-4 text-[.68rem] tracking-wide text-white/70 md:text-xs">{f}</p></div>)}
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS (sticky, digerakkan scroll Lenis) -->
+    <section id="how-it-works" data-hw data-steps={JSON.stringify(steps)} style="height:600vh">
+      <div class="sticky top-0 grid h-[100svh] items-center gap-6 px-6 pt-20 md:grid-cols-2 md:px-[4.5rem]">
+        <div>
+          <p class="eyebrow">02 — How it works</p>
+          <h2 class="h2 mt-5">One loop. Six steps. <span class="grad-text">Always on.</span></h2>
+          <div class="mt-10 min-h-[11rem]" data-hw-copy>
+            <p class="mono text-sm tracking-[.2em] text-[#44e1ff]" data-hw-idx>01 / 06</p>
+            <h3 class="mt-3 text-5xl font-light md:text-6xl" data-hw-title>{steps[0][0]}</h3>
+            <p class="mt-4 max-w-md text-lg leading-relaxed text-white/75" data-hw-text>{steps[0][1]}</p>
+          </div>
+        </div>
+        <div class="mx-auto w-full max-w-[34rem]">
+          <svg viewBox="0 0 400 400" class="w-full" role="img" aria-label="Six-step agent loop">
+            <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(255,255,255,.14)" stroke-dasharray="2 6" />
+            <circle data-hw-arc cx="200" cy="200" r="150" fill="none" stroke="url(#hwg)" stroke-width="2.5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-90 200 200)" />
+            <defs><linearGradient id="hwg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#44e1ff" /><stop offset="1" stop-color="#ff7ad9" /></linearGradient></defs>
+            <g data-hw-orbit style="transform-origin:200px 200px"><circle cx="200" cy="50" r="6" fill="#fff" /></g>
+            <text x="200" y="196" text-anchor="middle" fill="#fff" font-size="34" font-weight="200" data-hw-center>Screen</text>
+            <text x="200" y="222" text-anchor="middle" class="hw-label">ARIA LOOP</text>
+            {nodes.map((n, i) => <g><circle data-hw-node class={`hw-node ${i === 0 ? 'on' : ''}`} cx={n.x} cy={n.y} r="14" /><text x={n.x} y={n.y + 4} text-anchor="middle" font-size="11" fill="#fff" class="mono">{i + 1}</text><text data-hw-lab class={`hw-label ${i === 0 ? 'on' : ''}`} x={n.lx} y={n.ly} text-anchor="middle">{steps[i][0].toUpperCase()}</text></g>)}
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROTECTION -->
+    <section id="protection" class="sec">
+      <p class="eyebrow" data-reveal>03 — Protection</p>
+      <h2 class="h2 mt-6 max-w-4xl" data-reveal>Protection that acts like <span class="grad-text">an operator.</span></h2>
+      <div class="mt-16 grid gap-10 lg:grid-cols-[1fr_1.1fr]">
+        <div>
+          <h3 class="mono text-sm tracking-[.2em] text-white/55" data-reveal>RISK CONTROL</h3>
+          <ul class="mt-6">{risks.map((r, i) => <li data-reveal class="group flex items-center gap-5 border-b border-white/12 py-4 text-lg transition hover:pl-3 hover:text-[#44e1ff] md:text-xl"><span class="mono text-xs text-white/40">{pad(i + 1)}</span>{r}</li>)}</ul>
+          <div class="glass mt-10 border-l-2 !border-l-[#ff7ad9] p-6 text-white/80" data-reveal><p class="mono mb-2 text-xs tracking-[.2em] text-[#ff7ad9]">READ-ONLY BY DESIGN</p>Risk limits are read-only in the dashboard until authentication, audit logging, and confirmation layers ship. We would rather lock it than let it be changed carelessly.</div>
+        </div>
+        <div>
+          <h3 class="text-4xl font-light md:text-5xl" data-reveal>Four wallets. <span class="text-white/55">One purpose each.</span></h3>
+          <div class="mt-10 grid gap-4 sm:grid-cols-2">
+            {wallets.map(([n, c], i) => <div class="glass spot p-7" data-reveal data-spot><p class="mono text-xs text-[#44e1ff]">WALLET {pad(i + 1)}</p><p class="mt-6 text-3xl font-light">{n}</p><p class="mt-3 text-white/70">{c}</p></div>)}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="sec" data-views={JSON.stringify(views)}>
+      <p class="eyebrow" data-reveal>04 — Dashboard</p>
+      <h2 class="h2 mt-6" data-reveal>Everything in <span class="grad-text">one place.</span></h2>
+      <p class="mt-5 max-w-xl text-lg text-white/70" data-reveal>Eleven views. One live picture of your strategy.</p>
+      <div class="mt-14 grid gap-6 lg:grid-cols-[.8fr_1.2fr]" data-reveal>
+        <div class="glass overflow-hidden" role="tablist" aria-label="Dashboard views">
+          {views.map(([n], i) => <button type="button" role="tab" data-tab={i} class={`tab ${i === 0 ? 'on' : ''}`}>{n}<span>{pad(i + 1)}</span></button>)}
+        </div>
+        <div class="glass flex min-h-[26rem] flex-col p-6 md:p-10" aria-live="polite">
+          <div class="flex items-center gap-2"><i class="h-2.5 w-2.5 rounded-full bg-[#ff5f6d]"></i><i class="h-2.5 w-2.5 rounded-full bg-[#ffc65c]"></i><i class="h-2.5 w-2.5 rounded-full bg-[#5ce08a]"></i><span class="mono ml-4 text-xs text-white/45" data-d-path>aria / overview</span><span class="mono ml-auto rounded border border-white/20 px-2 py-0.5 text-[.62rem] tracking-widest text-white/50">SAMPLE DATA</span></div>
+          <p class="mono mt-10 text-xs tracking-[.2em] text-[#ff7ad9]" data-d-idx>VIEW 01 / 11</p>
+          <h3 class="mt-3 text-5xl font-light md:text-6xl" data-d-title>{views[0][0]}</h3>
+          <p class="mt-4 max-w-md text-lg text-white/75" data-d-text>{views[0][1]}</p>
+          <div class="mt-8 grid gap-4" data-d-body></div>
+          <div class="mt-auto flex h-32 items-end gap-1.5 pt-10" data-d-bars>{Array.from({ length: 28 }, () => <i class="block flex-1 origin-bottom rounded-t bg-gradient-to-t from-[#44e1ff]/10 to-[#8b7bff]"></i>)}</div>
+        </div>
+      </div>
+      <p class="mt-10 max-w-2xl text-white/60" data-reveal>We mark what we cannot verify. A service with no verified health source shows as unavailable, never as fine.</p>
+    </section>
+
+    <!-- FAQ: kiri = judul + kartu pertanyaan aktif, kanan = accordion -->
+    <section id="faq" class="sec">
+      <div class="grid gap-12 lg:grid-cols-2 lg:gap-20">
+        <div class="lg:sticky lg:top-28 lg:self-start">
+          <p class="eyebrow" data-reveal>05 — FAQ</p>
+          <h2 class="h2 mt-6" data-reveal>Straight answers.</h2>
+          <p class="mt-6 max-w-md text-lg leading-relaxed text-white/70" data-reveal>Short, honest replies to what people ask before they let an agent near their capital.</p>
+          <div class="glass mt-10 max-w-md p-6 md:p-8" data-reveal>
+            <p class="mono text-xs tracking-[.2em] text-[#ff7ad9]">QUESTION <span data-faq-idx>01</span> / {pad(faq.length)}</p>
+            <p class="mt-4 min-h-[4.5rem] text-2xl font-light leading-snug" data-faq-title>{faq[0][0]}</p>
+            <div class="mt-6 h-px bg-white/15"><div class="h-full origin-left bg-gradient-to-r from-[#44e1ff] to-[#ff7ad9] transition-transform duration-500" data-faq-bar style="transform:scaleX(.125)"></div></div>
+            <a href={links.dashboard} class="pill pill-solid mt-7">Launch Dashboard ↗</a>
+          </div>
+        </div>
+        <div class="border-t border-white/15">
+          {faq.map(([q, a], i) => <div class="border-b border-white/15" data-reveal><button type="button" class="faq-q flex w-full items-center gap-5 py-6 text-left text-lg md:text-xl" aria-expanded="false" aria-controls={`fa${i}`} data-q={q}><span class="mono text-xs text-white/40">{pad(i + 1)}</span><span class="flex-1">{q}</span><span class="faq-i mono text-3xl text-[#44e1ff]">+</span></button><div id={`fa${i}`} class="faq-a"><p class="max-w-xl pb-6 pl-[2.6rem] text-base leading-relaxed text-white/70 md:text-lg">{a}</p></div></div>)}
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA + footer -->
+    <section id="cta" class="relative flex min-h-screen flex-col justify-between overflow-hidden bg-gradient-to-b from-transparent via-[#04050f]/20 to-[#04050f]/75 px-6 pt-24 md:px-[4.5rem] md:pt-32">
+      <div class="relative grid items-center gap-10 md:grid-cols-2">
+        <div>
+          <h2 class="text-[clamp(2.8rem,6vw,6rem)] font-light leading-[1] tracking-[-.03em]" data-reveal>Put the loop <br /><span class="grad-text">to work.</span></h2>
+          <p class="mt-6 max-w-lg text-lg text-white/75" data-reveal>Launch the dashboard, connect a wallet, and watch the agent reason in real time.</p>
+          <div class="mt-8 flex flex-wrap gap-3" data-reveal>
+            <a href={links.dashboard} class="pill pill-solid">Launch Dashboard ↗</a>
+            {/* <a href={links.telegram} class="pill">Join Telegram</a> */}
+          </div>
+          <p class="mono mt-5 text-xs text-white/45">Beta access. Trading involves risk, including loss of capital.</p>
+        </div>
+        {/* kotak kosong: logo kaca 3D digambar di sini oleh scene.js (posisi & ukuran mengikuti kotak ini) */}
+        <div id="cta-stage" class="mx-auto aspect-square w-full max-w-[17rem] md:max-w-[32rem]" aria-hidden="true"></div>
+      </div>
+      <footer class="relative mt-24 pb-8">
+        <div class="grid grid-cols-3 gap-x-4 gap-y-8 border-t border-white/15 pt-8 text-[.82rem] text-white/60 md:grid-cols-[1.2fr_1fr_1fr_1fr] md:gap-x-8 md:text-sm">
+          <div class="col-span-3 md:col-span-1"><p class="text-2xl font-bold tracking-[.18em] text-white">ARIA</p><p class="mt-3 max-w-[16rem]">Your capital. Your strategy. Powered by ARIA.</p></div>
+          <div class="grid content-start gap-2">{nav.map(([l, id]) => <a href={`#${id}`} data-scroll={id} class="w-fit hover:text-white">{l}</a>)}</div>
+          <div class="grid content-start gap-2"><a href={links.hivemind} class="w-fit hover:text-white">HiveMind</a><a href={links.health} class="w-fit hover:text-white">Health</a><a href={links.telegram} class="w-fit hover:text-white">Telegram</a><a href={links.github} class="w-fit hover:text-white">GitHub</a></div>
+          <div class="grid content-start gap-2"><a href={links.terms} class="w-fit hover:text-white">Terms</a><a href={links.privacy} class="w-fit hover:text-white">Privacy</a><a href={links.risk} class="w-fit hover:text-white">Risk Disclosure</a></div>
+        </div>
+        <p class="mt-8 max-w-4xl text-xs leading-relaxed text-white/45">ARIA is software for managing trading strategies, not financial advice. Digital asset trading, including DLMM liquidity provision, involves substantial risk, including total loss of capital. Past performance does not guarantee future results. Availability may be restricted in some jurisdictions.</p>
+        <p class="select-none text-center text-[clamp(6rem,30vw,28rem)] font-extrabold leading-[.78] tracking-[-.05em]" aria-hidden="true" data-wordmark>ARIA</p>
+        <div class="mt-6 flex justify-between text-xs text-white/45"><span>© 2026 ARIA Unified Platform</span><button type="button" data-scroll="top" class="hover:text-white">Back to top ↑</button></div>
+      </footer>
+    </section>
+  </main>
+</Layout>

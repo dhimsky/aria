@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+const { title = 'ARIA — The agent that shows its work.', description = 'ARIA runs autonomous liquidity strategies on Solana DLMM. It screens pools, validates every entry, manages risk by hard rules, and logs every decision where you can see it.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#04050f" />
+    <meta property="og:title" content={title} /><meta property="og:description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="loader" class="fixed inset-0 z-50 bg-black">
+      <!-- blueprint: garis-garis digambar bertahap (ui.js) membentuk segitiga, mengikuti progres loading -->
+      <svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full" aria-hidden="true" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+        <g stroke-opacity=".35" stroke-width="1">
+          <line data-draw data-s="0" data-e=".35" x1="60" y1="215" x2="940" y2="215" pathLength="1" />
+          <line data-draw data-s=".05" data-e=".4" x1="60" y1="395" x2="940" y2="395" pathLength="1" />
+          <line data-draw data-s=".1" data-e=".45" x1="60" y1="548" x2="940" y2="548" pathLength="1" />
+          <line data-draw data-s=".1" data-e=".45" x1="60" y1="572" x2="940" y2="572" pathLength="1" />
+          <line data-draw data-s=".15" data-e=".5" x1="500" y1="0" x2="500" y2="700" pathLength="1" />
+          <line data-draw data-s=".15" data-e=".5" x1="220" y1="0" x2="220" y2="700" pathLength="1" />
+          <line data-draw data-s=".2" data-e=".55" x1="780" y1="0" x2="780" y2="700" pathLength="1" />
+        </g>
+        <g stroke-opacity=".4" stroke-width="1" data-fade data-s=".3" data-e=".6">
+          <circle cx="500" cy="372" r="300" stroke-dasharray="2 6" />
+          <circle cx="500" cy="372" r="150" stroke-dasharray="2 6" />
+          <line x1="220" y1="548" x2="500" y2="372" stroke-dasharray="3 5" /><line x1="780" y1="548" x2="500" y2="372" stroke-dasharray="3 5" /><line x1="500" y1="90" x2="500" y2="372" stroke-dasharray="3 5" />
+        </g>
+        <g stroke-opacity=".85" stroke-width="1.2">
+          <polygon data-draw data-s=".25" data-e=".8" points="500,90 220,548 780,548" pathLength="1" />
+          <polygon data-draw data-s=".35" data-e=".85" points="500,128 262,548 738,548" pathLength="1" />
+          <polygon data-draw data-s=".45" data-e=".95" points="500,270 405,430 595,430" pathLength="1" />
+        </g>
+        <g stroke-opacity=".5" stroke-width="1">
+          <line data-draw data-s=".4" data-e=".9" x1="500" y1="90" x2="130" y2="700" pathLength="1" />
+          <line data-draw data-s=".4" data-e=".9" x1="500" y1="90" x2="870" y2="700" pathLength="1" />
+          <line data-draw data-s=".45" data-e=".95" x1="500" y1="128" x2="175" y2="700" pathLength="1" />
+          <line data-draw data-s=".45" data-e=".95" x1="500" y1="128" x2="825" y2="700" pathLength="1" />
+        </g>
+      </svg>
+      <div class="absolute inset-x-0 bottom-[14%] flex flex-col items-center">
+        <p class="mono text-[.7rem] tracking-[.18em] text-white/70 md:text-xs">Autonomous Reasoning Intelligent Agent.</p>
+        <div class="mt-6 h-px w-56 bg-white/15"><div id="load-bar" class="h-full w-full origin-left scale-x-0 bg-gradient-to-r from-[#44e1ff] to-[#ff7ad9]"></div></div>
+        <p class="mono mt-4 text-xs tracking-[.3em] text-white/50"><span id="load-n">0</span>% · INITIALIZING AGENT</p>
+        <p id="loader-hint" class="mono mt-3 text-[.68rem] tracking-[.2em] text-white/35">♪ SOUND ON — CLICK ANYWHERE TO ENABLE</p>
+      </div>
+    </div>
+    <canvas id="bg" aria-hidden="true"></canvas>
+    <slot />
+    <script>
+      import '../scripts/scene.js';
+      import '../scripts/ui.js';
+    </script>
+  </body>
+</html>
